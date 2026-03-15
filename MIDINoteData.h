@@ -5,6 +5,7 @@
 #include <cstdint>
  
 #include "MIDIKey.h"
+#include "MIDIConfig.h"
  
 // ======================================================================= //
  
@@ -29,13 +30,9 @@ namespace Sherbert::MIDI
      */
     struct MIDINoteData
     {
-        static constexpr uint8_t maxVelocity = 127;
-        static constexpr uint8_t minVelocity = 0;
- 
-        // ------------------------------------------------------------------- //
  
         Key      key      = Key::C4;
-        uint8_t  velocity = maxVelocity;
+        uint8_t  velocity = Config::defaultVelocity;
         bool     isNoteOn = true;
  
         // ------------------------------------------------------------------- //
@@ -88,7 +85,7 @@ namespace Sherbert::MIDI
             if (key == MIDIKey::NUL)
                 return 0.0f;
  
-            return FrequencyTable[getNoteNumber()];
+            return MIDIKeyFrequencyTable[getNoteNumber()];
         }
  
         /** Returns true if this note event is valid (key is not NUL). */
