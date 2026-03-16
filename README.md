@@ -71,13 +71,13 @@ target_link_libraries(YourTarget PRIVATE Sherbert::Sherbert_MIDI)
 #include "MIDI.h"
  
 // Table lookup (fast, constexpr)
-float freq = Sherbert::MIDI::Utils::keyToHz(Sherbert::MIDI::MIDIKey::A5); // 440.0f
+float freq = Sherbert::MIDI::MIDIUtils::keyToHz(Sherbert::MIDI::MIDIKey::A5); // 440.0f
  
 // Raw note number
-float freq = Sherbert::MIDI::Utils::midiToHz(69); // 440.0f
+float freq = Sherbert::MIDI::MIDIUtils::midiToHz(69); // 440.0f
  
 // Formula-based (use for non-standard tuning)
-float freq = Sherbert::MIDI::Utils::midiToHzCalculated(69, 432.0f); // A432 tuning
+float freq = Sherbert::MIDI::MIDIUtils::midiToHzCalculated(69, 432.0f); // A432 tuning
 ```
  
 ### Note Events
@@ -100,35 +100,35 @@ bool valid   = note.isValid();       // true
 ### Transposition
 ```cpp
 // Transpose a frequency up 12 semitones (one octave)
-float up = Sherbert::MIDI::Utils::transpose(440.0f, 12); // 880.0f
+float up = Sherbert::MIDI::MIDIUtils::transpose(440.0f, 12); // 880.0f
  
 // Transpose a Key by semitones
-auto key = Sherbert::MIDI::Utils::transposeKey(Sherbert::MIDI::MIDIKey::A5, -12); // A4
+auto key = Sherbert::MIDI::MIDIUtils::transposeKey(Sherbert::MIDI::MIDIKey::A5, -12); // A4
 ```
  
 ### String Parsing
 ```cpp
 // Musical notation
-auto key = Sherbert::MIDI::Utils::nameToKey("A5");    // MIDIKey::A5
-auto key = Sherbert::MIDI::Utils::nameToKey("Db4");   // MIDIKey::Db4
-auto key = Sherbert::MIDI::Utils::nameToKey("C-1");   // MIDIKey::Cn1
-auto key = Sherbert::MIDI::Utils::nameToKey("A#4");   // MIDIKey::Bb4 (nearest flat)
+auto key = Sherbert::MIDI::MIDIUtils::nameToKey("A5");    // MIDIKey::A5
+auto key = Sherbert::MIDI::MIDIUtils::nameToKey("Db4");   // MIDIKey::Db4
+auto key = Sherbert::MIDI::MIDIUtils::nameToKey("C-1");   // MIDIKey::Cn1
+auto key = Sherbert::MIDI::MIDIUtils::nameToKey("A#4");   // MIDIKey::Bb4 (nearest flat)
  
 // Enum identifier style
-auto key = Sherbert::MIDI::Utils::nameToKey("Cn1");   // MIDIKey::Cn1
-auto key = Sherbert::MIDI::Utils::nameToKey("Dbn1");  // MIDIKey::Dbn1
+auto key = Sherbert::MIDI::MIDIUtils::nameToKey("Cn1");   // MIDIKey::Cn1
+auto key = Sherbert::MIDI::MIDIUtils::nameToKey("Dbn1");  // MIDIKey::Dbn1
 ```
  
 ### Quantization
 ```cpp
-Sherbert::MIDI::Quantization grid = Sherbert::MIDI::Quantization::SixteenthNotes;
+Sherbert::MIDI::MIDIQuantization grid = Sherbert::MIDI::MIDIQuantization::SixteenthNotes;
 ```
  
 ### Constants
 ```cpp
-uint8_t maxVel  = Sherbert::MIDI::Constants::maxVelocity;    // 127
-float   defBpm  = Sherbert::MIDI::Constants::defaultTempo;   // 120.0f
-int32_t ppq     = Sherbert::MIDI::Constants::ticksPerQuarterNote; // 960
+uint8_t maxVel  = Sherbert::MIDI::Config::maxVelocity;    // 127
+float   defBpm  = Sherbert::MIDI::Config::defaultTempo;   // 120.0f
+int32_t ppq     = Sherbert::MIDI::Config::ticksPerQuarterNote; // 960
 ```
  
 -----------------------------------------------------------------------
@@ -139,8 +139,8 @@ int32_t ppq     = Sherbert::MIDI::Constants::ticksPerQuarterNote; // 960
 -----------------------------------------------------------------------
 ## Notes
 - All enharmonic naming uses **flats** (`Ab`, `Bb`, `Db`, `Eb`, `Gb`) throughout for consistency and identifier safety
-- `MIDIKey::NUL` (value 128) is a sentinel for "no note" or invalid — always check `isValid()` or compare against `MIDIKey::NUL` before use
-- Frequency values are tuned to **A5 = 440 Hz** (concert pitch). Use `midiToHzCalculated()` for alternative tuning systems
+- `MIDIKey::NUL` (value 128) is a sentinel for "no note" or invalid; always check `isValid()` or compare against `MIDIKey::NUL` before use
+- Frequency values are tuned to **A5 - 440 Hz** (concert pitch). Use `midiToHzCalculated()` for alternative tuning systems
 - Designed as a standalone C++ learning resource and drop-in utility library
  
 -----------------------------------------------------------------------
