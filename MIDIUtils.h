@@ -26,9 +26,9 @@ namespace Sherbert::MIDI
      *
      * Frequency conversion uses A5 = 440 Hz (concert pitch) as the reference.
      */
-    struct Utils
+    struct MIDIUtils
     {
-        Utils() = delete;
+        MIDIUtils() = delete;
  
         // ------------------------------------------------------------------- //
         // Note <-> Frequency
@@ -256,9 +256,7 @@ namespace Sherbert::MIDI
  
             return static_cast<MIDIKey>(midiNote);
         }
- 
     };
- 
 }
  
 // ======================================================================= //
